@@ -14,6 +14,7 @@ export class SalaryCalculatorService {
   // National Insurance rates
   niThreshold = 9500;
   lowerNIRate = 0.12;
+  newLowerNIRate = 0.1; //after January
   upperNIRate = 0.02;
   monthlySalary: number | null = null;
 
@@ -48,7 +49,10 @@ export class SalaryCalculatorService {
     return inHandSalary;
   }
 
-  calculateTaxDetails(annualSalary: number): {
+  calculateTaxDetails(
+    annualSalary: number,
+    taxCode: string
+  ): {
     incomeTax: number;
     niContributions: number;
   } {

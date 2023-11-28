@@ -11,9 +11,13 @@ export class SalaryCalcComponent implements OnInit {
   inHandSalary: number | null = null;
   monthlySalary: number | null = null;
   dailySalary: number | null = null;
-  taxDetails: { incomeTax: number; niContributions: number } | null = null;
+  taxDetails: { incomeTax: number; niContributions: number; } | null = null;
   monthlyTaxDetails: { incomeTax: number; niContributions: number } | null =
     null;
+  showMoreTaxCodeInformation: boolean = false;
+
+  customTaxCode: string = '1250L'; // New property for custom tax code
+
 
   constructor(private calculator: SalaryCalculatorService) {}
 
@@ -29,7 +33,7 @@ export class SalaryCalcComponent implements OnInit {
   }
 
   private calculateTaxDetails() {
-    this.taxDetails = this.calculator.calculateTaxDetails(this.annualSalary);
+    this.taxDetails = this.calculator.calculateTaxDetails(this.annualSalary, this.customTaxCode);
   }
 
   clearForm(){
@@ -38,5 +42,14 @@ export class SalaryCalcComponent implements OnInit {
     this.monthlySalary = null;
     this.dailySalary = null;
     this.taxDetails = null;
+    this.customTaxCode = '1250L'; 
+  }
+
+  showTaxCode(){
+    console.log(this.customTaxCode)
+  }
+
+  toggleTaxCodeInformation(){
+    this.showMoreTaxCodeInformation = !this.showMoreTaxCodeInformation;
   }
 }

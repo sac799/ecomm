@@ -2,7 +2,6 @@
     <div class="card border-primary">
         <div class="card-body">
             <h2 class="card-title text-primary">UK Salary Calculator</h2>
-
             <form>
                 <div class="mb-3">
                     <label for="annualSalary" class="form-label">Enter Annual Salary (£)</label>
@@ -12,14 +11,11 @@
                             name="annualSalary" required>
                     </div>
                 </div>
-
                 <div class="d-grid gap-2">
                     <button type="button" class="btn btn-primary" (click)="calculateInHandSalary()">Calculate</button>
                     <button type="button" class="btn btn-secondary" (click)="clearForm()">Clear</button>
                 </div>
-
             </form>
-
             <div *ngIf="inHandSalary !== null" class="mt-4">
                 <h4 class="card-subtitle mb-2 text-success">Results:</h4>
                 <ul class="list-group">
@@ -28,14 +24,71 @@
                     <li class="list-group-item">Daily Salary: £{{ dailySalary | number: '1.2-2' }}</li>
                 </ul>
             </div>
-
             <div *ngIf="taxDetails" class="mt-4">
                 <h4 class="card-subtitle mb-2 text-danger">Tax Details:</h4>
                 <ul class="list-group">
+                    <li class="list-group-item">Tax code: {{customTaxCode}}</li>
                     <li class="list-group-item">Annual Income Tax: £{{ taxDetails.incomeTax | number: '1.2-2' }}</li>
                     <li class="list-group-item">Annual National Insurance: £{{ taxDetails.niContributions | number:
                         '1.2-2' }}</li>
                 </ul>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-danger mt-2" (click)="toggleTaxCodeInformation()">
+        {{ showMoreTaxCodeInformation ? 'Hide More Details' : 'Show More Details' }}
+    </button>
+</div>
+<div class="container mt-2 animate__animated animate__fadeInUp" *ngIf="showMoreTaxCodeInformation">
+    <div class="card border-primary">
+        <div class="card-body">
+            <h2 class="card-title text-primary">Tax Code Information</h2>
+            <div class="mt-4">
+                <p>Information about different tax codes in the United Kingdom (2023).</p>
+                <ul>
+                    <li><strong>Standard Tax Code:</strong> 1250L - Basic Personal Allowance</li>
+                    <li><strong>Emergency Tax Code:</strong> 1250L W1/M1 - Used in emergency situations</li>
+                    <li><strong>BR (Basic Rate):</strong> BR - All income taxed at the basic rate (20%)</li>
+                    <li><strong>D0 (Higher Rate):</strong> D0 - All income taxed at the higher rate (40%)</li>
+                    <li><strong>D1 (Additional Rate):</strong> D1 - All income taxed at the additional rate (45%)</li>
+                    <li><strong>K Codes:</strong> Used for deductions or adjustments to income</li>
+                    <li>More Details available here: <a href="https://www.gov.uk/tax-codes/what-your-tax-code-means"
+                            target="_blank">https://www.gov.uk/tax-codes/what-your-tax-code-means</a></li>
+                </ul>
+            </div>
+            <div class="mt-4">
+                <h4>Tax Bands:</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Band</th>
+                            <th scope="col">Taxable Income</th>
+                            <th scope="col">Tax Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Personal Allowance</td>
+                            <td>Up to £12,570</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>Basic rate</td>
+                            <td>£12,571 to £50,270</td>
+                            <td>20%</td>
+                        </tr>
+                        <tr>
+                            <td>Higher rate</td>
+                            <td>£50,271 to £125,140</td>
+                            <td>40%</td>
+                        </tr>
+                        <tr>
+                            <td>Additional rate</td>
+                            <td>over £125,140</td>
+                            <td>45%</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
