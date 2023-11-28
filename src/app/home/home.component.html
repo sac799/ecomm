@@ -1,1 +1,198 @@
-<p>home works!</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<div class="container-fluid">
+    <div class="row">
+       
+        <div class="col-md-12 d-flex justify-content-end align-items-center mt-4">
+            <!-- Logo -->
+            <img src="assets/logo.png" alt="Logo" class="logo mr-3" style="max-height: 70px;">
+        
+            <!-- Search Box -->
+            <div class="input-group mr-3">
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        
+            <!-- Card Buttons -->
+            <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target="#loginModal">
+                Login
+            </button>
+            <button class="btn btn-primary ml-2" data-toggle="modal" data-target="#registerModal">
+                Register
+            </button>
+        </div>
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar mt-2">
+            <h4>Categories</h4>
+            <div class="sidebar-sticky" *ngFor="let category of categories">
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                </h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active card btn btn-grey" (click)="loadProductwithCategory(category)">
+                            {{ category }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+
+            <div *ngFor="let product of products" class="product-card">
+                <h2>{{ product.title }}</h2>
+                <p>{{ product.description }}</p>
+                <p>Price: {{ product.price | currency }}</p>
+                <img [src]="product.category.image" alt="{{ product.category.name }}">
+                <div *ngFor="let image of product.images">
+                  <img [src]="image" alt="Product Image">
+                </div>
+              </div>
+            <!-- <div class="container mt-4">
+                <div class="row">
+                    <div *ngFor="let product of products | paginate: { itemsPerPage: 8, currentPage: p }"
+                        class="col-md-3 mb-4">
+                        <div class="card h-100 product-card">
+                            <img [src]="product.image" alt="{{ product.title }}" class="img-fluid product-image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.title }}</h5>
+                                <p class="card-text">Price: ${{ product.price }}</p>
+                                <p class="card-text">Category: {{ product.category }}</p>
+                                <div class="d-flex justify-content-between">
+                                    <span>Rating: {{ product.rating.rate }}</span>
+                                    <span>{{ product.rating.count }} ratings</span>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between">
+                                <button class="btn btn-success" (click)="addtoCart(product.id, product)">Add to
+                                    Cart</button>
+                                <button class="btn btn-primary" (click)="showProductDetail(product.id)">Open</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-end">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                </div>
+                <div class="modal" [ngClass]="{ 'show': showModal, 'd-block': showModal }" id="productDetailModal"
+                    tabindex="-1" role="dialog" aria-labelledby="productDetailModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" (click)="closeProductDetail()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img [src]="selectedProduct?.image" class="img-fluid">
+                                </div>
+                                <div class="col-md-6">
+                                    <h2>{{ selectedProduct?.title }}</h2>
+                                    <p>{{ selectedProduct?.description }}</p>
+                                    <p>Price: ${{ selectedProduct?.price }}</p>
+                                    <p>Category: {{ selectedProduct?.category }}</p>
+                                    <div>
+                                        <span>Rating: {{ selectedProduct?.rating.rate }}</span>
+                                        <span>({{ selectedProduct?.rating.count }} ratings)</span>
+                                    </div>
+                                    <button class="btn btn-primary mr-2" style="margin-top: 10%;">Buy</button>
+                                    <button class="btn btn-success" style="margin-left: 2%; margin-top: 10%;">Add to
+                                        Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-overlay" [ngClass]="{ 'show': showModal, 'd-block': showModal }"></div> -->
+        </main>
+
+        <!-- Login Modal -->
+        <div class="modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Login Form -->
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password"
+                                    placeholder="Enter your password">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Login</button>
+                        </form>
+                        <!-- Or Login with Google -->
+                        <hr>
+                        <p class="text-center">Or login with Google:</p>
+                        <!-- <button type="button" class="btn btn-danger btn-block">Login with Google</button> -->
+                        <a class="login-with-google">
+                            <span class="icon fa fa-google-plus"></span>
+                            Login with google
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Register Modal -->
+        <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerModalLabel">Register</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Registration Form -->
+                        <form>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fullName"
+                                    placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="password" class="form-control" id="newPassword"
+                                    placeholder="Create a password">
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="password" class="form-control" id="newPassword"
+                                    placeholder="Create a password">
+                            </div>
+                            <button type="submit" class="btn btn-success mt-2">Register</button>
+                        </form>
+
+                        <!-- Or Register with Google -->
+                        <hr>
+                        <p class="text-center">Or register with Google:</p>
+                        <a class="login-with-google">
+                            <span class="icon fa fa-google-plus"></span>
+                            Register with google
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

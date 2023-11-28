@@ -1,0 +1,42 @@
+<div class="container mt-5 animate__animated animate__fadeInUp">
+    <div class="card border-primary">
+        <div class="card-body">
+            <h2 class="card-title text-primary">UK Salary Calculator</h2>
+
+            <form>
+                <div class="mb-3">
+                    <label for="annualSalary" class="form-label">Enter Annual Salary (£)</label>
+                    <div class="input-group">
+                        <span class="input-group-text">£</span>
+                        <input type="number" class="form-control" id="annualSalary" [(ngModel)]="annualSalary"
+                            name="annualSalary" required>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-primary" (click)="calculateInHandSalary()">Calculate</button>
+                    <button type="button" class="btn btn-secondary" (click)="clearForm()">Clear</button>
+                </div>
+
+            </form>
+
+            <div *ngIf="inHandSalary !== null" class="mt-4">
+                <h4 class="card-subtitle mb-2 text-success">Results:</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">Annual Salary: £{{ inHandSalary | number: '1.2-2' }}</li>
+                    <li class="list-group-item">Monthly Salary: £{{ monthlySalary | number: '1.2-2' }}</li>
+                    <li class="list-group-item">Daily Salary: £{{ dailySalary | number: '1.2-2' }}</li>
+                </ul>
+            </div>
+
+            <div *ngIf="taxDetails" class="mt-4">
+                <h4 class="card-subtitle mb-2 text-danger">Tax Details:</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">Annual Income Tax: £{{ taxDetails.incomeTax | number: '1.2-2' }}</li>
+                    <li class="list-group-item">Annual National Insurance: £{{ taxDetails.niContributions | number:
+                        '1.2-2' }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
